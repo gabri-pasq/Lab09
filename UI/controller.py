@@ -9,4 +9,11 @@ class Controller:
         self._model = model
 
     def handleAnalizza(self,e):
-        pass
+        self._view._txt_result.clean()
+        self._model.buildGraph(int(self._view._txtIn.value))
+        self._view._txt_result.controls.append(ft.Text(f'Il grafo ha {len(self._model.grafo.nodes)} nodi'))
+        for arco in self._model.grafo.edges:
+            peso = self._model.grafo[arco[0]][arco[1]]['percorso']
+            stampa = f'Partenza: {self._model.idMap[peso.airportP]} - Arrivo: {self._model.idMap[peso.airportA]}, Distanza: {peso.distanza}'
+            self._view._txt_result.controls.append(ft.Text(stampa))
+        self._view.update_page()
